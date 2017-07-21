@@ -18,7 +18,7 @@
       android:textSize="12sp" />
 
   <TextView
-      android:id="@+id/coast"
+      android:id="@+id/cost"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
@@ -27,7 +27,7 @@
       android:layout_margin="6dp"
       android:gravity="end"
       android:text="6000"
-      android:textColor="@color/day_item_color_list"
+      android:textColor="@color/day_item_cost_color_list"
       android:textSize="10sp"
       android:visibility="gone" />
 

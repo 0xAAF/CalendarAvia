@@ -11,32 +11,34 @@ import android.widget.TextView;
 class DayHolder extends RecyclerView.ViewHolder {
 
   private final TextView day;
-  private final TextView coast;
+  private final TextView cost;
   private final View     find;
 
   public DayHolder(View itemView) {
     super(itemView);
     day = (TextView) itemView.findViewById(R.id.day);
-    coast = (TextView) itemView.findViewById(R.id.coast);
+    cost = (TextView) itemView.findViewById(R.id.cost);
     find = itemView.findViewById(R.id.find);
   }
 
   void update(DayItem item) {
-    int     visibleInCurrentMonth = item.currentMonth() ? View.VISIBLE : View.GONE;
-    boolean selected              = item.getCoast() != null;
-    itemView.setEnabled(item.currentMonth());
-    itemView.setSelected(selected);
+    int     visibleInCurrentMonth = item.isCurrentMonth() ? View.VISIBLE : View.GONE;
+    boolean hasCost               = item.getCost() != null;
+    boolean green                 = item.isMinimal();
+    itemView.setEnabled(item.isCurrentMonth());
+    itemView.setSelected(green);
 
     day.setVisibility(visibleInCurrentMonth);
     day.setText(String.valueOf(item.getDay()));
     day.setEnabled(item.isWeekend());
-    day.setSelected(selected);
+    day.setSelected(green);
 
-    coast.setVisibility(selected ? View.VISIBLE : View.GONE);
-    coast.setSelected(selected);
-    if (selected) {
-      coast.setText(String.valueOf(item.getCoast()));
+    cost.setVisibility(hasCost ? visibleInCurrentMonth : View.GONE);
+    cost.setSelected(green);
+    cost.setEnabled(false);
+    if (hasCost) {
+      cost.setText(String.valueOf(item.getCost()));
     }
-    find.setVisibility(selected ? View.GONE : visibleInCurrentMonth);
+    find.setVisibility(hasCost ? View.GONE : visibleInCurrentMonth);
   }
 }

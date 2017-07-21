@@ -7,6 +7,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by magic on 7/20/17.
  */
@@ -22,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     view.setLayoutManager(new GridLayoutManager(this, 7));
     final CalendarAdapter adapter = new CalendarAdapter();
     view.setAdapter(adapter);
-    adapter.setMonth(0);
     final TextView dateTextView = (TextView) findViewById(R.id.date);
     dateTextView.setText(adapter.getDate());
 
@@ -34,5 +36,15 @@ public class MainActivity extends AppCompatActivity {
         dateTextView.setText(adapter.getDate());
       }
     });
+    Map<Integer, Integer> map = new HashMap<>();
+    map.put(14, 2000);
+    map.put(26, 4000);
+    map.put(20, 2200);
+    map.put(23, 3400);
+    map.put(5, 2000);
+    map.put(9, 6000);
+
+    adapter.setItems(map);
+    adapter.setMonth(0);
   }
 }

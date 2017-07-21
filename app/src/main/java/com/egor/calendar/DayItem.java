@@ -8,21 +8,24 @@ class DayItem {
   private final boolean currentMonth;
   private final boolean weekend;
   private final int     day;
-  private Integer     coast;
+  private       Integer cost;
+  private final boolean minimal;
 
   public DayItem(
       int day,
       boolean currentMonth,
       boolean weekend,
-      Integer coast) {
+      Integer cost,
+      boolean minimal) {
 
     this.day = day;
     this.currentMonth = currentMonth;
     this.weekend = weekend;
-    this.coast = coast;
+    this.cost = cost;
+    this.minimal = minimal;
   }
 
-  private boolean isCurrentMonth() {
+  public boolean isCurrentMonth() {
     return currentMonth;
   }
 
@@ -34,11 +37,11 @@ class DayItem {
     return day;
   }
 
-  public boolean currentMonth() {
-    return currentMonth;
+  public Integer getCost() {
+    return cost;
   }
 
-  public Integer getCoast() {
-    return coast;
+  public boolean isMinimal() {
+    return minimal;
   }
 }

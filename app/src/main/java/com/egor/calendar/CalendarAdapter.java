@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -18,11 +19,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<DayHolder> {
 
   private DayItem[] days = new DayItem[42];
   private int                   month;
-  private Map<Integer, Integer> coastMap;
+  private Map<Integer, Integer> costMap;
   private OnDayClickListener    listener;
+  private int                   costMin;
 
   public CalendarAdapter() {
-    coastMap = new HashMap<>();
+    costMap = new HashMap<>();
   }
 
   @Override
@@ -53,8 +55,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<DayHolder> {
   }
 
   public void setItems(Map<Integer, Integer> coastMap) {
-    this.coastMap.clear();
-    this.coastMap.putAll(coastMap);
+    this.costMap.clear();
+    this.costMap.putAll(coastMap);
+    this.costMin = Collections.min(coastMap.values());
     notifyDataSetChanged();
   }
 
@@ -72,11 +75,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<DayHolder> {
     int prevDaysCount = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     int current       = prevDaysCount - wrapDay(dayStart);
     for (int i = 0; i < days.length; i++) {
+      Integer cost = costMap.get(current);
       days[i] = new DayItem(
-          ++current,
-          prevDaysCount == 0 && daysCount != 0,
-          ((i + 1) % 7) == 0 || ((i + 2) % 7) == 0,
-          prevDaysCount == 0 ? coastMap.get(current) : null
+          ++current, //день
+          prevDaysCount == 0 && daysCount != 0, // текущий месяц ?
+          ((i + 1) % 7) == 0 || ((i + 2) % 7) == 0, //выходной ?
+          prevDaysCount == 0 ? cost : null, // цена в этот день, может быть null
+          cost != null && cost.equals(costMin) // минимальная цена за месяц ?
       );
 
       if (current == prevDaysCount) {
